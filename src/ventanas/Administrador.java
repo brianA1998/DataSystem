@@ -13,12 +13,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 
-/**
- * Declaracion de la clase Administrador
- *
- * @author Brian Ezequiel Alaniz
- * @version 19/04/2020
- */
+
 public class Administrador extends javax.swing.JFrame {
 
     //Declaracion atributos 
@@ -26,7 +21,7 @@ public class Administrador extends javax.swing.JFrame {
     public static int sesion_usuario;
 
     /**
-     * Declaracion del Constructor
+     * Crea un Administrador sin datos
      */
     public Administrador() {
         initComponents();
@@ -37,13 +32,15 @@ public class Administrador extends javax.swing.JFrame {
         setTitle("Administrador - Sesion de " + user);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//Terminar proceso para que no se ejecute en segundo 
+        
+        //Establece el wallpaper de la interfaz
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
 
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
-
+        //Establece el nombre de usuario en el jLabel_NombreUsuario
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
@@ -59,7 +56,10 @@ public class Administrador extends javax.swing.JFrame {
             System.err.println("Error en conexion desde la interfaz administrador");
         }
     }
-    
+    /**
+     * Permite cambiar el icono de la interfaz
+     * @return el logo
+     */
      @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));

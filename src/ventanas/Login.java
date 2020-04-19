@@ -13,20 +13,15 @@ import java.sql.*;
 import clases.Conexion;
 import javax.swing.JOptionPane;
 
-/**Declaracion de la clase Login
- * @author Brian Ezequiel Alaniz
- * @version 19/04/2020
- */
+
 public class Login extends javax.swing.JFrame {
 
     //Declaracion de los atributos
     public static String user = "";
     String pass = "";
 
-    /**
-     * Declaracion del Constructor.
-     *
-     *
+    /**Constructor
+     * Crea un Login sin Datos
      */
     public Login() {
         initComponents();
@@ -35,14 +30,14 @@ public class Login extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Acceso al sistema");
 
-        //Agregar la imagen dentro del JFrame
+        //Establece el wallpaper de la interfaz 
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
 
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
-
+        //Establece el logo de la interfaz Login
         ImageIcon wallpaper_logo = new ImageIcon("src/images/DS.png");
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(jLabel_Logo.getWidth(),
                 jLabel_Logo.getHeight(), Image.SCALE_DEFAULT));
@@ -50,7 +45,10 @@ public class Login extends javax.swing.JFrame {
         this.repaint();
 
     }
-
+    /**
+     *Permite cambiar el icono de la interfaz
+     * @return el logo 
+     */
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
@@ -111,14 +109,14 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Declaracion del metodo privado
+     * Crea un evento para el boton acceder
      *
      * @param evt siguiente evento de la lista
      */
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
-        //Validacion de campos
+        //verifica si los campos estan llenos o no
         if (!user.equals("") || !pass.equals("")) {
             try {
                 Connection cn = Conexion.conectar();
