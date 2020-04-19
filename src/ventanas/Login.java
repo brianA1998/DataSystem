@@ -13,9 +13,7 @@ import java.sql.*;
 import clases.Conexion;
 import javax.swing.JOptionPane;
 
-/**
- * Declaracion de la clase Login
- *
+/**Declaracion de la clase Login
  * @author Brian Ezequiel Alaniz
  * @version 19/04/2020
  */
