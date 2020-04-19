@@ -40,6 +40,8 @@ public class Administrador extends javax.swing.JFrame {
 
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
+        
+        
         //Establece el nombre de usuario en el jLabel_NombreUsuario
         try {
             Connection cn = Conexion.conectar();
@@ -101,6 +103,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jLabel_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jButton_RegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addUser.png"))); // NOI18N
+        jButton_RegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RegistrarUsuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_RegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, 100));
 
         jButton_GestionarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/informationuser.png"))); // NOI18N
@@ -148,6 +155,15 @@ public class Administrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Crea un evento para el boton registrar en el cual redirige a la interfaz de Registrar usuario
+     * @param evt siguiente evento
+     */
+    private void jButton_RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarUsuarioActionPerformed
+        RegistrarUsuarios registrarUsuarios = new RegistrarUsuarios();
+        registrarUsuarios.setVisible(true);
+    }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

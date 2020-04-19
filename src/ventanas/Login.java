@@ -34,9 +34,9 @@ public class Login extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
-
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
+        
         //Establece el logo de la interfaz Login
         ImageIcon wallpaper_logo = new ImageIcon("src/images/DS.png");
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(jLabel_Logo.getWidth(),
@@ -102,14 +102,14 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_Acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
 
-        jLabel_Footer.setText("Creado por brian ");
-        getContentPane().add(jLabel_Footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 520, -1, -1));
+        jLabel_Footer.setText("Creado por Brian Ezequiel Alaniz ");
+        getContentPane().add(jLabel_Footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 480, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Crea un evento para el boton acceder
+     * Crea un evento para el boton acceder en la cual la redirige a la interfaz de un determinado usuario
      *
      * @param evt siguiente evento de la lista
      */
