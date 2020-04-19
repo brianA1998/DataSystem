@@ -14,16 +14,21 @@ import clases.Conexion;
 import javax.swing.JOptionPane;
 
 /**
+ * Declaracion de la clase Login
  *
- * @author GARBARINO
+ * @author Brian Ezequiel Alaniz
+ * @version 19/04/2020
  */
 public class Login extends javax.swing.JFrame {
 
+    //Declaracion de los atributos
     public static String user = "";
     String pass = "";
 
     /**
-     * Creates new form Login
+     * Declaracion del Constructor.
+     *
+     *
      */
     public Login() {
         initComponents();
@@ -107,13 +112,48 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Declaracion del metodo privado
+     *
+     * @param evt siguiente evento de la lista
+     */
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
-
         //Validacion de campos
         if (!user.equals("") || !pass.equals("")) {
+            try {
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                        "select tipo_nivel,estatus from usuarios where username='" + user
+                        + "' and password = '" + pass + "'");
+
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    String tipo_nivel = rs.getString("tipo_nivel");
+                    String estatus = rs.getString("estatus");
+                    //Comprobar los permisos de los usuarios
+                    if (tipo_nivel.equalsIgnoreCase("Administrador") && estatus.equalsIgnoreCase("Activo")) {
+                        dispose();
+                        new Administrador().setVisible(true);
+
+                    } else if (tipo_nivel.equalsIgnoreCase("Capturista") && estatus.equalsIgnoreCase("Activo")) {
+                        dispose();
+                        new Capturista().setVisible(true);
+                    } else if (tipo_nivel.equalsIgnoreCase("Tecnico") && estatus.equalsIgnoreCase("Activo")) {
+                        dispose();
+                        new Tecnico().setVisible(true);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos de acceso incorrectos");
+                    txt_user.setText("");
+                    txt_password.setText("");
+                }
+            } catch (SQLException e) {
+                System.err.println("Error en el boton acceder" + e);
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesion,contacte al administrador");
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
