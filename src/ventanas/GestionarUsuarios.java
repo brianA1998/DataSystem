@@ -93,6 +93,10 @@ public class GestionarUsuarios extends javax.swing.JFrame {
 
         //Evento para obtener el campo en el cual el usuario esta seleccionando
         jTable_usuarios.addMouseListener(new MouseAdapter() {
+            /**
+             *Este metodo muestra la interfaz de InformacionUsuario cuando se hace click en algun campo
+             * de la tabla de usuarios
+             */
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila_point = jTable_usuarios.rowAtPoint(e.getPoint());
