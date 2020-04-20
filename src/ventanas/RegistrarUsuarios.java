@@ -169,6 +169,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     /**
      * Permite crear un evento al boton registrar y realiza la verificacion de
      * los campos te de texto
@@ -176,12 +177,11 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
      * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         //Declaracion de variables
         int permisos_cmb, validacion = 0;
-        String nombre, mail, telefono, username, pass, permisos_string;
-       
-        
+        String nombre, mail, telefono, username, pass, permisos_string = "";
+
         //Obtencion de datos de los campos de texto
         mail = txt_mail.getText().trim();
         username = txt_username.getText().trim();
@@ -231,6 +231,48 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 cn.close();
             } else {
 
+                cn.close();
+
+                if (validacion == 0) {
+                    try {
+                        //Realizando un insert en al base de datos en la tabla usuarios
+                        Connection cn2 = Conexion.conectar();
+                        PreparedStatement pst2 = cn2.prepareStatement(
+                                "insert into usuarios values (?,?,?,?,?,?,?,?,?)");
+                        //Valores que se van a guardar en cada campo
+                        pst2.setInt(1, 0);
+                        pst2.setString(2, nombre);
+                        pst2.setString(3, mail);
+                        pst2.setString(4, telefono);
+                        pst2.setString(5, username);
+                        pst2.setString(6, pass);
+                        pst2.setString(7, permisos_string);
+                        pst2.setString(8, "Activo");
+                        pst2.setString(9, user);
+
+                        pst2.executeUpdate();
+                        cn2.close();
+
+                        Limpiar();
+
+                        //Establece color verde si se logro registrar el usuario
+                        txt_mail.setBackground(Color.green);
+                        txt_username.setBackground(Color.green);
+                        txt_password.setBackground(Color.green);
+                        txt_nombre.setBackground(Color.green);
+                        txt_telefono.setBackground(Color.green);
+
+                        JOptionPane.showMessageDialog(null, "Registro exitoso");
+                        this.dispose();
+
+                    } catch (SQLException e) {
+                        System.err.println("Error al registrar usuario " + e);
+                        JOptionPane.showMessageDialog(null, "Error al registrar,contacte con el administrador");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+                }
+
             }
         } catch (SQLException e) {
             System.err.println("Error en validar nombre de usuario " + e);
@@ -241,7 +283,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     */
+     **/
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -292,4 +334,22 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Este metodo realiza una limpieza de todos los campos cuando se realizo exitosamente
+     * el registro del usuario en la base de datos
+     */
+    public void Limpiar() {
+        txt_mail.setText("");
+        txt_nombre.setText("");
+        txt_password.setText("");
+        txt_telefono.setText("");
+        txt_username.setText("");
+        
+        cmb_niveles.setSelectedIndex(0);
+
+    }
+    
+    
+
 }

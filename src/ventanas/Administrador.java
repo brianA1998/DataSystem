@@ -33,7 +33,7 @@ public class Administrador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//Terminar proceso para que no se ejecute en segundo 
         
-        //Establece el wallpaper de la interfaz
+        //Establece el wallpaper de la interfaz Administrador
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
@@ -42,7 +42,8 @@ public class Administrador extends javax.swing.JFrame {
         this.repaint();
         
         
-        //Establece el nombre de usuario en el jLabel_NombreUsuario
+        //Establece conexion a la base de datos,
+        //y el nombre de usuario en el jLabel_NombreUsuario
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
