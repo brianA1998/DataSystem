@@ -83,7 +83,7 @@ public class GestionarUsuarios extends javax.swing.JFrame {
 
             }
             jTable_usuarios.setModel(model);
-            
+
             cn.close();
 
         } catch (SQLException e) {
@@ -91,6 +91,20 @@ public class GestionarUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al mostrar informacion,contacte al administrador");
         }
 
+        //Evento para obtener el campo en el cual el usuario esta seleccionando
+        jTable_usuarios.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = jTable_usuarios.rowAtPoint(e.getPoint());
+                int columna_point = 2;
+
+                if (fila_point > -1) {
+                    user_update = (String)model.getValueAt(fila_point, columna_point);
+                    InformacionUsuario informacion_usuario = new InformacionUsuario();
+                    informacion_usuario.setVisible(true);
+                }
+            }
+        });
     }
 
     /**
