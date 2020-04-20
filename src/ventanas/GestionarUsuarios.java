@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -50,6 +51,45 @@ public class GestionarUsuarios extends javax.swing.JFrame {
 
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
+
+        try {
+            //Conexion y query a la base de datos
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "select id_usuario,nombre_usuario,username,tipo_nivel,estatus from usuarios");
+            ResultSet rs = pst.executeQuery();
+
+            jTable_usuarios = new JTable(model);
+            jScrollPane1.setViewportView(jTable_usuarios);
+
+            //Agregando columnas a la tabla
+            model.addColumn(" ");
+            model.addColumn("Nombre");
+            model.addColumn("Username");
+            model.addColumn("Permisos");
+            model.addColumn("Estatus");
+
+            while (rs.next()) {
+
+                //Declaracion del vector tipo object
+                Object[] fila = new Object[5];
+
+                //Obteniendo datos de la base de datos
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                //Añaniendo al modelo la fila completa
+                model.addRow(fila);
+
+            }
+            jTable_usuarios.setModel(model);
+            
+            cn.close();
+
+        } catch (SQLException e) {
+            System.err.println("Error al llenar tabla" + e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar informacion,contacte al administrador");
+        }
 
     }
 
