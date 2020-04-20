@@ -33,7 +33,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        //Establece el wallpaper de la interfaz 
+        //Establece el wallpaper de la interfaz RegistrarUsuarios
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
@@ -170,21 +170,26 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Permite crear un evento al boton registrar
+     * Permite crear un evento al boton registrar y realiza la verificacion de
+     * los campos te de texto
      *
      * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        //Declaracion de variables
         int permisos_cmb, validacion = 0;
         String nombre, mail, telefono, username, pass, permisos_string;
-
+       
+        
+        //Obtencion de datos de los campos de texto
         mail = txt_mail.getText().trim();
         username = txt_username.getText().trim();
         pass = txt_password.getText().trim();
         nombre = txt_nombre.getText().trim();
         telefono = txt_telefono.getText().trim();
         permisos_cmb = cmb_niveles.getSelectedIndex() + 1;
-
+        //Verificacion de los campos de texto
         if (mail.equals("")) {
             txt_mail.setBackground(Color.red);
             validacion++;
@@ -213,7 +218,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         } else if (permisos_cmb == 3) {
             permisos_string = "Tecnico";
         }
-
+        //Conexion y query a la base de datos
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(

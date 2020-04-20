@@ -13,15 +13,14 @@ import java.sql.*;
 import clases.Conexion;
 import javax.swing.JOptionPane;
 
-
 public class Login extends javax.swing.JFrame {
 
     //Declaracion de los atributos
     public static String user = "";
     String pass = "";
 
-    /**Constructor
-     * Crea un Login sin Datos
+    /**
+     * Constructor Crea un Login sin Datos
      */
     public Login() {
         initComponents();
@@ -36,7 +35,7 @@ public class Login extends javax.swing.JFrame {
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
-        
+
         //Establece el logo de la interfaz Login
         ImageIcon wallpaper_logo = new ImageIcon("src/images/DS.png");
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(jLabel_Logo.getWidth(),
@@ -45,9 +44,11 @@ public class Login extends javax.swing.JFrame {
         this.repaint();
 
     }
+
     /**
-     *Permite cambiar el icono de la interfaz
-     * @return el logo 
+     * Permite cambiar el icono de la interfaz
+     *
+     * @return el logo
      */
     @Override
     public Image getIconImage() {
@@ -109,15 +110,20 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Crea un evento para el boton acceder en la cual la redirige a la interfaz de un determinado usuario
+     * Crea un evento para el boton acceder en la cual la redirige a la interfaz
+     * de un determinado usuario
      *
      * @param evt siguiente evento de la lista
      */
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
+        
+        //Obtencion de los datos de los campos de texto
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
+        
         //verifica si los campos estan llenos o no
         if (!user.equals("") || !pass.equals("")) {
+            //Conexion y consulta a la base de datos
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
