@@ -13,7 +13,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 
-
 public class Administrador extends javax.swing.JFrame {
 
     //Declaracion atributos 
@@ -32,38 +31,39 @@ public class Administrador extends javax.swing.JFrame {
         setTitle("Administrador - Sesion de " + user);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//Terminar proceso para que no se ejecute en segundo 
-        
+
         //Establece el wallpaper de la interfaz Administrador
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
                 jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
-
+        
         jLabel_Wallpaper.setIcon(icono);
         this.repaint();
-        
-        
+
         //Establece conexion a la base de datos,
         //y el nombre de usuario en el jLabel_NombreUsuario
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
                     "select nombre_usuario  from usuarios where username = '" + user + "'");
-
+            
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 nombre_usuario = rs.getString("nombre_usuario");
                 jLabel_NombreUsuario.setText(nombre_usuario);
-
+                
             }
         } catch (Exception e) {
             System.err.println("Error en conexion desde la interfaz administrador");
         }
     }
+
     /**
      * Permite cambiar el icono de la interfaz
+     *
      * @return el logo
      */
-     @Override
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
         return retValue;
@@ -112,6 +112,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jButton_RegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, 100));
 
         jButton_GestionarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/informationuser.png"))); // NOI18N
+        jButton_GestionarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GestionarUsuariosActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_GestionarUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 120, 100));
 
         jButton_Creatividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/creatividad.png"))); // NOI18N
@@ -158,13 +163,26 @@ public class Administrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Crea un evento para el boton registrar en el cual redirige a la interfaz de Registrar usuario
+     * Crea un evento para el boton registrar en el cual redirige a la interfaz
+     * de Registrar usuario
+     *
      * @param evt siguiente evento
      */
     private void jButton_RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarUsuarioActionPerformed
         RegistrarUsuarios registrarUsuarios = new RegistrarUsuarios();
         registrarUsuarios.setVisible(true);
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
+
+    /**
+     * Crea un evento para el boton GestionarUsuarios en el cual redirige a la
+     * interfaz de GestionarUsuario
+     *
+     * @param evt siguiente evento
+     */
+    private void jButton_GestionarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GestionarUsuariosActionPerformed
+        GestionarUsuarios gestionarUsuarios = new GestionarUsuarios();
+        gestionarUsuarios.setVisible(true);
+    }//GEN-LAST:event_jButton_GestionarUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
