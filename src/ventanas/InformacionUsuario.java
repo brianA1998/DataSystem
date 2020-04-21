@@ -5,19 +5,65 @@
  */
 package ventanas;
 
+import java.sql.*;
+import clases.Conexion;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author GARBARINO
  */
 public class InformacionUsuario extends javax.swing.JFrame {
 
+    //Declaracion de atributos
+    String user = "", user_update = "";
+    int ID;
+
     /**
      * Creates new form InformacionUsuario sin datos
      */
     public InformacionUsuario() {
         initComponents();
+        //Obteniendo variables static de otras clases
+        user = Login.user;
+        user_update = GestionarUsuarios.user_update;
+
+        //Reafirmando diseño y dimensiones de la interfaz
+        setSize(630, 450);
+        setResizable(false);
         setLocationRelativeTo(null);
-        
+        setTitle("Informacion del usuario " + user_update + " - Sesion de " + user);
+
+        /**
+         * Metodo que nos permite evitar que el programa finalice cuando esta
+         * interfaz se cierre
+         */
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        //Establece el wallpaper de la interfaz Administrador
+        ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
+        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),
+                jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_Wallpaper.setIcon(icono);
+        this.repaint();
+
+        jLabel_Titulo.setText("Informacion del usuario " + user_update);
+
+    }
+
+    /**
+     * Permite cambiar el icono de la interfaz
+     *
+     * @return el logo
+     */
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
     }
 
     /**
@@ -29,7 +75,7 @@ public class InformacionUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_Titulo = new javax.swing.JLabel();
         jLabel_Nombre = new javax.swing.JLabel();
         jLabel_Nombre1 = new javax.swing.JLabel();
         jLabel_Nombre2 = new javax.swing.JLabel();
@@ -44,15 +90,18 @@ public class InformacionUsuario extends javax.swing.JFrame {
         txt_RegistradoPor = new javax.swing.JTextField();
         cmb_niveles = new javax.swing.JComboBox<>();
         cmb_estatus = new javax.swing.JComboBox<>();
+        jButton_Actualizar = new javax.swing.JButton();
+        jButton_RestaurarPassword = new javax.swing.JButton();
+        jLabel_footer = new javax.swing.JLabel();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Informacion del Usuario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
+        jLabel_Titulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel_Titulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_Titulo.setText("Informacion del Usuario");
+        getContentPane().add(jLabel_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
 
         jLabel_Nombre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel_Nombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -128,8 +177,25 @@ public class InformacionUsuario extends javax.swing.JFrame {
         cmb_niveles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
         getContentPane().add(cmb_niveles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
-        cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo", " " }));
+        cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
         getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, -1));
+
+        jButton_Actualizar.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Actualizar.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Actualizar.setText("Actualizar Usuario");
+        jButton_Actualizar.setBorder(null);
+        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 210, 35));
+
+        jButton_RestaurarPassword.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_RestaurarPassword.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        jButton_RestaurarPassword.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_RestaurarPassword.setText("Restaurar Password");
+        jButton_RestaurarPassword.setBorder(null);
+        getContentPane().add(jButton_RestaurarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 210, 35));
+
+        jLabel_footer.setText("Creado por Brian Ezequiiel Alaniz");
+        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 450));
 
         pack();
@@ -173,7 +239,8 @@ public class InformacionUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmb_estatus;
     private javax.swing.JComboBox<String> cmb_niveles;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_RestaurarPassword;
     private javax.swing.JLabel jLabel_Nombre;
     private javax.swing.JLabel jLabel_Nombre1;
     private javax.swing.JLabel jLabel_Nombre2;
@@ -181,7 +248,9 @@ public class InformacionUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Nombre4;
     private javax.swing.JLabel jLabel_Nombre5;
     private javax.swing.JLabel jLabel_Nombre6;
+    private javax.swing.JLabel jLabel_Titulo;
     private javax.swing.JLabel jLabel_Wallpaper;
+    private javax.swing.JLabel jLabel_footer;
     private javax.swing.JTextField txt_RegistradoPor;
     private javax.swing.JTextField txt_mail;
     private javax.swing.JTextField txt_nombre;
