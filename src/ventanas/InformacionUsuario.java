@@ -239,6 +239,7 @@ public class InformacionUsuario extends javax.swing.JFrame {
      *
      * @param evt
      */
+    @SuppressWarnings("ConvertToTryWithResources")
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
         //Declaracion de variables
         int permisos_cmb, estatus_cmb, validacion = 0;
@@ -299,11 +300,11 @@ public class InformacionUsuario extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
                     cn.close();
                 } else {
-                    try {
+                   
                         Connection cn2 = Conexion.conectar();
                         PreparedStatement pst2 = cn2.prepareStatement(
-                                "update usuarios set nombre_usuario =?,email =?,telefono=?,username=?,tipo_nivel=?,estatus=? "
-                                + "where id_usuario = '" + ID + "'");
+                                "UPDATE usuarios SET nombre_usuario=?, email=?, telefono=?, username=?, tipo_nivel=?, estatus=? "
+                                        + "where id_usuario = '" + ID + "'");
 
                         pst2.setString(1, nombre);
                         pst2.setString(2, mail);
@@ -313,11 +314,10 @@ public class InformacionUsuario extends javax.swing.JFrame {
                         pst2.setString(6, estatus_string);
 
                         pst2.executeUpdate();
-                        cn2.close();
+                        
                         JOptionPane.showMessageDialog(null, "Modificacion correcta");
-                    } catch (SQLException e) {
-                        System.err.println("Error " + e);
-                    }
+                        cn2.close();
+                    
 
                 }
             } catch (SQLException e) {
